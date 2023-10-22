@@ -69,12 +69,13 @@ class ViewController: UIViewController,
     }
     
     func setFilter(action: UIAlertAction) {
-        print(action.title!)
-        filterButton.setTitle("Change Filter (\(action.title!))", for: .normal)
-        guard currentImage != nil else { return }
-        guard let actionTitle = action.title else { return }
-        currentFilter = CIFilter(name: actionTitle)
         
+        guard let actionTitle = action.title else { return }
+        //print(actionTitle)
+        currentFilter = CIFilter(name: actionTitle)
+        filterButton.setTitle("Change Filter (\(actionTitle))", for: .normal)
+        
+        guard currentImage != nil else { return }
         let beginImage = CIImage(image: currentImage)
         currentFilter.setValue(beginImage, forKey: kCIInputImageKey)
         applyProcessing()
