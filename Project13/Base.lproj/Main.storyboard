@@ -94,6 +94,7 @@
                     <navigationItem key="navigationItem" id="wPY-hu-dm1"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
+                        <outlet property="filterButton" destination="VzO-Gs-IUg" id="XPL-pc-Xhp"/>
                         <outlet property="imageView" destination="nYg-6P-hB7" id="mcB-Yb-SJP"/>
                         <outlet property="intensity" destination="g9a-hd-5zV" id="XAg-kA-QrA"/>
                     </connections>

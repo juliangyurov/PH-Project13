@@ -12,6 +12,9 @@ class ViewController: UIViewController,
                       UINavigationControllerDelegate {
     @IBOutlet var imageView: UIImageView!
     @IBOutlet var intensity: UISlider!
+    
+    @IBOutlet var filterButton: UIButton!
+    
     var currentImage: UIImage!
     
     var context: CIContext!
@@ -67,6 +70,7 @@ class ViewController: UIViewController,
     
     func setFilter(action: UIAlertAction) {
         print(action.title!)
+        filterButton.setTitle("Change Filter (\(action.title!))", for: .normal)
         guard currentImage != nil else { return }
         guard let actionTitle = action.title else { return }
         currentFilter = CIFilter(name: actionTitle)
