@@ -29,7 +29,26 @@ class ViewController: UIViewController,
         
         context = CIContext()
         currentFilter = CIFilter(name: "CISepiaTone")
+        filterButton.setTitle("Change Filter (CISepiaTone)", for: .normal)
+        
+
+        
+//        let slider = UISlider(frame:CGRectMake(70, 550, 280, 20))
+//        slider.layer.name = "My Slider"
+//        slider.minimumValue = 0
+//        slider.maximumValue = 100
+//        //slider.isContinuous = true
+//        //slider.tintColor = UIColor.red
+//        slider.value = 50
+//        slider.tag = 12
+//        slider.addTarget(self, action: #selector(mySliderValueDidChange), for: .valueChanged)
+//        self.view.addSubview(slider)
     }
+    
+    @objc func mySliderValueDidChange(sender:UISlider!)
+        {
+            print("My Slider \(sender.tag) Value--\(sender.value)")
+        }
 
 
     @objc func importPicture() {
