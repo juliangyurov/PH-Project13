@@ -40,13 +40,13 @@
                                             <action selector="intensityChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="QCC-zj-V6N"/>
                                         </connections>
                                     </slider>
-                                    <slider opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="IdT-xc-OQK" userLabel="Slider2">
+                                    <slider opaque="NO" tag="1" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="IdT-xc-OQK" userLabel="Slider2">
                                         <rect key="frame" x="80" y="44" width="283" height="31"/>
                                         <connections>
                                             <action selector="intensityChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="lND-Br-K5A"/>
                                         </connections>
                                     </slider>
-                                    <slider opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="Rwb-L0-uz8" userLabel="Slider3">
+                                    <slider opaque="NO" tag="2" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="Rwb-L0-uz8" userLabel="Slider3">
                                         <rect key="frame" x="80" y="75" width="283" height="31"/>
                                         <connections>
                                             <action selector="intensityChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="cdi-EG-9GU"/>
@@ -148,6 +148,11 @@
                         <outlet property="filterButton" destination="VzO-Gs-IUg" id="XPL-pc-Xhp"/>
                         <outlet property="imageView" destination="nYg-6P-hB7" id="mcB-Yb-SJP"/>
                         <outlet property="intensity" destination="g9a-hd-5zV" id="XAg-kA-QrA"/>
+                        <outlet property="intensity1" destination="IdT-xc-OQK" id="zE6-pt-WJP"/>
+                        <outlet property="intensity1Label" destination="YZ6-n0-J00" id="7Nv-3d-ojQ"/>
+                        <outlet property="intensity2" destination="Rwb-L0-uz8" id="5k0-FS-ytS"/>
+                        <outlet property="intensity2Label" destination="JTB-ir-x5G" id="3jm-4b-pxI"/>
+                        <outlet property="intensityLabel" destination="Dx5-YU-0LY" id="Yt1-82-OU5"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

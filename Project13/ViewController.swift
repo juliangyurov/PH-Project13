@@ -12,8 +12,17 @@ class ViewController: UIViewController,
                       UINavigationControllerDelegate {
     @IBOutlet var imageView: UIImageView!
     @IBOutlet var intensity: UISlider!
+    @IBOutlet var intensity1: UISlider!
+    @IBOutlet var intensity2: UISlider!
     
     @IBOutlet var filterButton: UIButton!
+    
+    @IBOutlet var intensityLabel: UILabel!
+    
+    @IBOutlet var intensity1Label: UILabel!
+    
+    @IBOutlet var intensity2Label: UILabel!
+    
     
     var currentImage: UIImage!
     
@@ -30,26 +39,10 @@ class ViewController: UIViewController,
         context = CIContext()
         currentFilter = CIFilter(name: "CISepiaTone")
         filterButton.setTitle("Change Filter (CISepiaTone)", for: .normal)
-        
-
-        
-//        let slider = UISlider(frame:CGRectMake(70, 550, 280, 20))
-//        slider.layer.name = "My Slider"
-//        slider.minimumValue = 0
-//        slider.maximumValue = 100
-//        //slider.isContinuous = true
-//        //slider.tintColor = UIColor.red
-//        slider.value = 50
-//        slider.tag = 12
-//        slider.addTarget(self, action: #selector(mySliderValueDidChange), for: .valueChanged)
-//        self.view.addSubview(slider)
+        intensity.isEnabled = true
+        intensity1.isEnabled = false
+        intensity2.isEnabled = false
     }
-    
-    @objc func mySliderValueDidChange(sender:UISlider!)
-        {
-            print("My Slider \(sender.tag) Value--\(sender.value)")
-        }
-
 
     @objc func importPicture() {
         let picker = UIImagePickerController()
@@ -88,15 +81,17 @@ class ViewController: UIViewController,
     }
     
     func setFilter(action: UIAlertAction) {
-        
+       
         guard let actionTitle = action.title else { return }
-        //print(actionTitle)
+        print(actionTitle)
         currentFilter = CIFilter(name: actionTitle)
         filterButton.setTitle("Change Filter (\(actionTitle))", for: .normal)
+        setUpSliders()
         
         guard currentImage != nil else { return }
         let beginImage = CIImage(image: currentImage)
         currentFilter.setValue(beginImage, forKey: kCIInputImageKey)
+        //setUpSliders()
         applyProcessing()
     }
     
@@ -113,28 +108,145 @@ class ViewController: UIViewController,
     }
     
     @IBAction func intensityChanged(_ sender: Any) {
+//        var sliderTag = 0
+//        if let slider = sender as? UISlider {
+//            sliderTag =  slider.tag
+//        }
         applyProcessing()
     }
     
-    func applyProcessing() {
+    func setUpSliders() {
+        
+        /*
+         CIBumpDistortion
+        inputKeys.inputKeys=4
+        inputKeys=["inputImage", "inputCenter", "inputRadius", "inputScale"]
+        CIGaussianBlur
+        inputKeys.inputKeys=2
+        inputKeys=["inputImage", "inputRadius"]
+        CIPixellate
+        inputKeys.inputKeys=3
+        inputKeys=["inputImage", "inputCenter", "inputScale"]
+        CISepiaTone
+        inputKeys.inputKeys=2
+        inputKeys=["inputImage", "inputIntensity"]
+        CITwirlDistortion
+        inputKeys.inputKeys=4
+        inputKeys=["inputImage", "inputCenter", "inputRadius", "inputAngle"]
+        CIUnsharpMask
+        inputKeys.inputKeys=3
+        inputKeys=["inputImage", "inputRadius", "inputIntensity"]
+        CIVignette
+        inputKeys.inputKeys=3
+        inputKeys=["inputImage", "inputIntensity", "inputRadius"]
+         */
+        
         let inputKeys = currentFilter.inputKeys
-        print("-------------------------")
-        if inputKeys.contains(kCIInputIntensityKey){
-            currentFilter.setValue(intensity.value, forKey: kCIInputIntensityKey)
-            print("kCIInputIntensityKey")
+        print("inputKeys.inputKeys=\(currentFilter.inputKeys.count)")
+        print("inputKeys=\(currentFilter.inputKeys)")
+        if inputKeys.count == 2 {
+            intensity.isEnabled = true
+            intensity1.isEnabled = false
+            intensity2.isEnabled = false
+            intensityLabel.text = removeInputStr(input: inputKeys[1])
+            intensity1Label.text = "Intensity"
+            intensity2Label.text = "Intensity"
+        }else if inputKeys.count == 3 {
+            intensity.isEnabled = true
+            intensity1.isEnabled = true
+            intensity2.isEnabled = false
+            intensityLabel.text = removeInputStr(input: inputKeys[1])
+            intensity1Label.text = removeInputStr(input: inputKeys[2])
+            intensity2Label.text = "Intensity"
+        }else if inputKeys.count == 4 {
+            intensity.isEnabled = true
+            intensity1.isEnabled = true
+            intensity2.isEnabled = true
+            intensityLabel.text = removeInputStr(input: inputKeys[1])
+            intensity1Label.text = removeInputStr(input: inputKeys[2])
+            intensity2Label.text = removeInputStr(input: inputKeys[3])
+        }else{
+            intensity.isEnabled = false
+            intensity1.isEnabled = false
+            intensity2.isEnabled = false
+            intensityLabel.text = "Intensity"
+            intensity1Label.text = "Intensity"
+            intensity2Label.text = "Intensity"
         }
-        if inputKeys.contains(kCIInputRadiusKey){
-            currentFilter.setValue(intensity.value*200, forKey: kCIInputRadiusKey)
-            print("kCIInputRadiusKey")
+     }
+    
+    func removeInputStr(input: String) -> String {
+        let str = input
+        if let range = str.range(of: "input") {
+            let substring = str[range.upperBound...]
+            return String(substring)
         }
-        if inputKeys.contains(kCIInputScaleKey){
-            currentFilter.setValue(intensity.value*10, forKey: kCIInputScaleKey)
-            print("kCIInputScaleKey")
+        else {
+          return "Intensity"
         }
-        if inputKeys.contains(kCIInputCenterKey){
+    }
+    
+    func applyProcessing() {
+        //let inputKeys = currentFilter.inputKeys
+        
+        guard currentImage != nil else { return }
+        
+        if currentFilter.name == "CIBumpDistortion" {
+            print("I am in CIBumpDistortion")
             currentFilter.setValue(CIVector(x: currentImage.size.width / 2,y: currentImage.size.height / 2 ), forKey: kCIInputCenterKey)
-            print("kCIInputCenterKey")
+            currentFilter.setValue(intensity1.value*200, forKey: kCIInputRadiusKey)
+            currentFilter.setValue(intensity2.value*10, forKey: kCIInputScaleKey)
+            
         }
+        if currentFilter.name == "CIGaussianBlur" {
+            print("I am in CIGaussianBlur")
+            currentFilter.setValue(intensity.value*200, forKey: kCIInputRadiusKey)
+        }
+        if currentFilter.name == "CIPixellate" {
+            print("I am in CIPixellate")
+            currentFilter.setValue(CIVector(x: currentImage.size.width / 2,y: currentImage.size.height / 2 ), forKey: kCIInputCenterKey)
+            currentFilter.setValue(intensity1.value*10, forKey: kCIInputScaleKey)
+        }
+        if currentFilter.name == "CISepiaTone" {
+            print("I am in CISepiaTone")
+            currentFilter.setValue(intensity.value, forKey: kCIInputIntensityKey)
+            
+        }
+        if currentFilter.name == "CITwirlDistortion" {
+            print("I am in CITwirlDistortion")
+            currentFilter.setValue(CIVector(x: currentImage.size.width / 2,y: currentImage.size.height / 2 ), forKey: kCIInputCenterKey)
+            currentFilter.setValue(intensity1.value*200, forKey: kCIInputRadiusKey)
+            currentFilter.setValue(intensity2.value*10, forKey: kCIInputAngleKey)
+        }
+        if currentFilter.name == "CIUnsharpMask" {
+            print("I am in CIUnsharpMask")
+            currentFilter.setValue(intensity.value*200, forKey: kCIInputRadiusKey)
+            currentFilter.setValue(intensity1.value, forKey: kCIInputIntensityKey)
+        }
+        if currentFilter.name == "CIVignette" {
+            print("I am in CIVignette")
+            currentFilter.setValue(intensity.value, forKey: kCIInputIntensityKey)
+            currentFilter.setValue(intensity1.value*200, forKey: kCIInputRadiusKey)
+            
+        }
+         
+        print("-------------------------")
+        //        if inputKeys.contains(kCIInputIntensityKey) {
+//            currentFilter.setValue(intensity.value, forKey: kCIInputIntensityKey)
+//            print("kCIInputIntensityKey")
+//        }
+//        if inputKeys.contains(kCIInputRadiusKey) {
+//            currentFilter.setValue(intensity.value*200, forKey: kCIInputRadiusKey)
+//            print("kCIInputRadiusKey")
+//        }
+//        if inputKeys.contains(kCIInputScaleKey) {
+//            currentFilter.setValue(intensity.value*10, forKey: kCIInputScaleKey)
+//            print("kCIInputScaleKey")
+//        }
+//        if inputKeys.contains(kCIInputCenterKey) {
+//            currentFilter.setValue(CIVector(x: currentImage.size.width / 2,y: currentImage.size.height / 2 ), forKey: kCIInputCenterKey)
+//            print("kCIInputCenterKey")
+//        }
         
         guard let outputImage = currentFilter.outputImage else { return }
         //currentFilter.setValue(intensity.value, forKey: kCIInputIntensityKey)
