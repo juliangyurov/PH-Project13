@@ -2,7 +2,7 @@
 Written by [Paul Hudson](https://www.hackingwithswift.com/about)  ![twitter16](https://github.com/juliangyurov/PH-Project6a/assets/13259596/445c8ea0-65c4-4dba-8e1f-3f2750f0ef51)
   [@twostraws](https://twitter.com/twostraws)
 
-**Description:** Make a photo manipulation program using Core Image filters and a UISlider.
+**Description:** Make a photo manipulation program using Core Image filters and a `UISlider`.
 
 - Setting up
 
@@ -10,7 +10,7 @@ Written by [Paul Hudson](https://www.hackingwithswift.com/about)  ![twitter16](h
 
 - Importing a picture
 
-- Applying filters: CIContext, CIFilter
+- Applying filters: `CIContext`, `CIFilter`
 
 - Saving to the iOS photo library
 
