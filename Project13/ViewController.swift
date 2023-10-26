@@ -193,7 +193,8 @@ class ViewController: UIViewController,
         
         if currentFilter.name == "CIBumpDistortion" {
             print("I am in CIBumpDistortion")
-            currentFilter.setValue(CIVector(x: currentImage.size.width / 2,y: currentImage.size.height / 2 ), forKey: kCIInputCenterKey)
+//            currentFilter.setValue(CIVector(x: currentImage.size.width / 2,y: currentImage.size.height / 2 ), forKey: kCIInputCenterKey)
+            currentFilter.setValue(CIVector(x: currentImage.size.width * CGFloat(intensity.value) ,y: currentImage.size.height / 2 ), forKey: kCIInputCenterKey)
             currentFilter.setValue(intensity1.value*200, forKey: kCIInputRadiusKey)
             currentFilter.setValue(intensity2.value*10, forKey: kCIInputScaleKey)
             
@@ -204,7 +205,7 @@ class ViewController: UIViewController,
         }
         if currentFilter.name == "CIPixellate" {
             print("I am in CIPixellate")
-            currentFilter.setValue(CIVector(x: currentImage.size.width / 2,y: currentImage.size.height / 2 ), forKey: kCIInputCenterKey)
+            currentFilter.setValue(CIVector(x: currentImage.size.width * CGFloat(intensity.value) ,y: currentImage.size.height / 2 ), forKey: kCIInputCenterKey)
             currentFilter.setValue(intensity1.value*10, forKey: kCIInputScaleKey)
         }
         if currentFilter.name == "CISepiaTone" {
@@ -214,7 +215,7 @@ class ViewController: UIViewController,
         }
         if currentFilter.name == "CITwirlDistortion" {
             print("I am in CITwirlDistortion")
-            currentFilter.setValue(CIVector(x: currentImage.size.width / 2,y: currentImage.size.height / 2 ), forKey: kCIInputCenterKey)
+            currentFilter.setValue(CIVector(x: currentImage.size.width * CGFloat(intensity.value) ,y: currentImage.size.height / 2 ), forKey: kCIInputCenterKey)
             currentFilter.setValue(intensity1.value*200, forKey: kCIInputRadiusKey)
             currentFilter.setValue(intensity2.value*10, forKey: kCIInputAngleKey)
         }
